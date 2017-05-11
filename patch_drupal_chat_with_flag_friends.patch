@@ -1,0 +1,24 @@
+diff --git a/drupalchat.module b/drupalchat.module
+index 83aa86b..21adb59 100755
+--- a/drupalchat.module
++++ b/drupalchat.module
+@@ -897,10 +897,10 @@ function _drupalchat_buddylist($uid) {
+     }
+   }
+   elseif ($drupalchat_rel == DRUPALCHAT_REL_FF) {
+-    $result = db_query("SELECT * FROM {flag_friend} WHERE uid = :uid OR friend_uid = :uid", array(':uid' => $uid, ':friend_uid' => $uid));
++    $result = db_query("SELECT * FROM {flag_friend} WHERE uid = :uid OR entity_id = :uid", array(':uid' => $uid, ':entity_id' => $uid));
+ 
+     foreach ($result as $friend) {
+-      $uid == $friend->uid ? $users[] = $friend->friend_uid : $users[] = $friend->uid;
++      $uid == $friend->uid ? $users[] = $friend->entity_id : $users[] = $friend->uid;
+     }
+   }
+   return $users;
+@@ -1573,4 +1573,4 @@ function drupalchat_get_random_name() {
+   $f_contents = file($path);
+   $line = trim($f_contents[rand(0, count($f_contents) - 1)]);
+   return $line;
+-}
+\ No newline at end of file
++}
