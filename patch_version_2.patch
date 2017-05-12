@@ -6,7 +6,7 @@ index 8d1c5f4..e4eeb21 100755
      }
    }
    elseif ($drupalchat_rel == DRUPALCHAT_REL_FF) {
--    $result = db_query("SELECT * FROM {flag_friend} WHERE (uid = :uid OR entity_id = :uid) AND status = 1", array(':uid' => $uid, ':friend_uid' => $uid));
+-    $result = db_query("SELECT * FROM {flag_friend} WHERE uid = :uid OR entity_id = :uid", array(':uid' => $uid, ':friend_uid' => $uid));
 +    $result = db_query("SELECT * FROM {flag_friend} WHERE (uid = :uid OR entity_id = :uid) AND  status = 1", array(':uid' => $uid, ':friend_uid' => $uid));
  
      foreach ($result as $friend) {
