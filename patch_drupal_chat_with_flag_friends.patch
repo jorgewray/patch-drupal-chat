@@ -6,73 +6,8 @@ index 8d1c5f4..e4eeb21 100755
      }
    }
    elseif ($drupalchat_rel == DRUPALCHAT_REL_FF) {
--    $result = db_query("SELECT * FROM {flag_friend} WHERE (uid = :uid OR entity_id = :uid) AND status = 1", array(':uid' => $uid, ':friend_uid' => $uid));
+-    $result = db_query("SELECT * FROM {flag_friend} WHERE uid = :uid OR entity_id = :uid", array(':uid' => $uid, ':friend_uid' => $uid));
 +    $result = db_query("SELECT * FROM {flag_friend} WHERE (uid = :uid OR entity_id = :uid) AND  status = 1", array(':uid' => $uid, ':friend_uid' => $uid));
  
      foreach ($result as $friend) {
        $uid == $friend->uid ? $users[] = $friend->friend_uid : $users[] = $friend->uid;
-diff --git a/patch_drupal_chat_with_flag_friends.patch b/patch_drupal_chat_with_flag_friends.patch
-index cafb811..e69de29 100644
---- a/patch_drupal_chat_with_flag_friends.patch
-+++ b/patch_drupal_chat_with_flag_friends.patch
-@@ -1,60 +0,0 @@
--diff --git a/drupalchat.module b/drupalchat.module
--index 83aa86b..8d1c5f4 100755
----- a/drupalchat.module
--+++ b/drupalchat.module
--@@ -897,7 +897,7 @@ function _drupalchat_buddylist($uid) {
--     }
--   }
--   elseif ($drupalchat_rel == DRUPALCHAT_REL_FF) {
---    $result = db_query("SELECT * FROM {flag_friend} WHERE uid = :uid OR friend_uid = :uid", array(':uid' => $uid, ':friend_uid' => $uid));
--+    $result = db_query("SELECT * FROM {flag_friend} WHERE (uid = :uid OR entity_id = :uid) AND status = 1", array(':uid' => $uid, ':friend_uid' => $uid));
-- 
--     foreach ($result as $friend) {
--       $uid == $friend->uid ? $users[] = $friend->friend_uid : $users[] = $friend->uid;
--diff --git a/patch_drupal_chat_with_flag_friends.patch b/patch_drupal_chat_with_flag_friends.patch
--index 1c0e9f7..e69de29 100644
----- a/patch_drupal_chat_with_flag_friends.patch
--+++ b/patch_drupal_chat_with_flag_friends.patch
--@@ -1,42 +0,0 @@
---diff --git a/drupalchat.module b/drupalchat.module
---index 83aa86b..8d1c5f4 100755
------ a/drupalchat.module
---+++ b/drupalchat.module
---@@ -897,7 +897,7 @@ function _drupalchat_buddylist($uid) {
---     }
---   }
---   elseif ($drupalchat_rel == DRUPALCHAT_REL_FF) {
----    $result = db_query("SELECT * FROM {flag_friend} WHERE uid = :uid OR friend_uid = :uid", array(':uid' => $uid, ':friend_uid' => $uid));
---+    $result = db_query("SELECT * FROM {flag_friend} WHERE (uid = :uid OR entity_id = :uid) AND status = 1", array(':uid' => $uid, ':friend_uid' => $uid));
--- 
---     foreach ($result as $friend) {
---       $uid == $friend->uid ? $users[] = $friend->friend_uid : $users[] = $friend->uid;
---diff --git a/patch_drupal_chat_with_flag_friends.patch b/patch_drupal_chat_with_flag_friends.patch
---index c15a5c4..e69de29 100644
------ a/patch_drupal_chat_with_flag_friends.patch
---+++ b/patch_drupal_chat_with_flag_friends.patch
---@@ -1,24 +0,0 @@
----diff --git a/drupalchat.module b/drupalchat.module
----index 83aa86b..21adb59 100755
------- a/drupalchat.module
----+++ b/drupalchat.module
----@@ -897,10 +897,10 @@ function _drupalchat_buddylist($uid) {
----     }
----   }
----   elseif ($drupalchat_rel == DRUPALCHAT_REL_FF) {
-----    $result = db_query("SELECT * FROM {flag_friend} WHERE uid = :uid OR friend_uid = :uid", array(':uid' => $uid, ':friend_uid' => $uid));
----+    $result = db_query("SELECT * FROM {flag_friend} WHERE uid = :uid OR entity_id = :uid", array(':uid' => $uid, ':entity_id' => $uid));
---- 
----     foreach ($result as $friend) {
-----      $uid == $friend->uid ? $users[] = $friend->friend_uid : $users[] = $friend->uid;
----+      $uid == $friend->uid ? $users[] = $friend->entity_id : $users[] = $friend->uid;
----     }
----   }
----   return $users;
----@@ -1573,4 +1573,4 @@ function drupalchat_get_random_name() {
----   $f_contents = file($path);
----   $line = trim($f_contents[rand(0, count($f_contents) - 1)]);
----   return $line;
-----}
----\ No newline at end of file
----+}
